@@ -1,5 +1,5 @@
-import "./styles.css";
 import { useState } from "react";
+import "./styles.css";
 
 export default function App() {
   return (
@@ -10,23 +10,27 @@ export default function App() {
 }
 
 function Counter() {
-  const [step, setStep] = useState(1);
+  const [step, setStep] = useState(0);
   const [count, setCount] = useState(0);
 
   var date = new Date("july 1 2023");
   date.setDate(date.getDate() + count);
 
+  function reset(){
+    setCount(0)
+    setStep(1)
+  }
+
   return (
     <div>
       <div className="counters">
         <div>
-          <button onClick={() => setStep((step) => step - 1)}>-</button>
-          <span>Step: {step}</span>
-          <button onClick={() => setStep((step) => step + 1)}>+</button>
+          <input type="range" min="0" max="10" value={step} onChange={(e)=>setStep(+e.target.value)}/>
+          Step: {step}
         </div>
         <div>
           <button onClick={() => setCount(count - step)}>-</button>
-          <span>Count: {count}</span>
+          <input type="text" value={count} onChange={(e)=>setCount(+e.target.value)}/>
           <button onClick={() => setCount(count + step)}>+</button>
         </div>
       </div>
@@ -38,6 +42,8 @@ function Counter() {
           : `${Math.abs(count)} days ago was `}
         {date.toDateString()}
       </h4>
+
+      <button onClick={reset}>Reset</button>
     </div>
   );
 }
